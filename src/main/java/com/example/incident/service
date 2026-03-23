@@ -1,0 +1,32 @@
+package com.example.incident.service;
+
+import com.example.incident.dto.*;
+import com.example.incident.mapper.IncidentMapper;
+import com.example.incident.model.*;
+import com.example.incident.repository.IncidentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class IncidentService {
+
+    private final IncidentRepository repository;
+
+    public IncidentService(IncidentRepository repository) {
+        this.repository = repository;
+    }
+
+    public IncidentResponse create(IncidentRequest request) {
+        Incident incident = IncidentMapper.toEntity(request);
+        incident.setStatus(Status.NEW);
+        return IncidentMapper.toResponse(repository.save(incident));
+    }
+
+    public List<IncidentResponse> getAll() {
+        return repository.findAll()
+                .stream()
+                .map(IncidentMapper::toResponse)
+                .toList();
+    }
+}
