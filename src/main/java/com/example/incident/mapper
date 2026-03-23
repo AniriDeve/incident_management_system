@@ -1,0 +1,27 @@
+package com.example.incident.mapper;
+
+import com.example.incident.dto.*;
+import com.example.incident.model.*;
+
+import java.time.LocalDateTime;
+
+public class IncidentMapper {
+
+    public static Incident toEntity(IncidentRequest request) {
+        Incident incident = new Incident();
+        incident.setTitle(request.getTitle());
+        incident.setDescription(request.getDescription());
+        incident.setCreatedAt(LocalDateTime.now());
+        return incident;
+    }
+
+    public static IncidentResponse toResponse(Incident incident) {
+        IncidentResponse response = new IncidentResponse();
+        response.setId(incident.getId());
+        response.setTitle(incident.getTitle());
+        response.setDescription(incident.getDescription());
+        response.setStatus(incident.getStatus());
+        response.setCreatedAt(incident.getCreatedAt());
+        return response;
+    }
+}
